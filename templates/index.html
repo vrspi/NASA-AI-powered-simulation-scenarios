@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEOSSAT FITS Processing Progress</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even){background-color: #f9f9f9;}
+        tr:hover {background-color: #ddd;}
+    </style>
+</head>
+<body>
+    <h1>NEOSSAT FITS Processing Progress</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Total Files</th>
+                <th>Current File</th>
+                <th>Filename</th>
+                <th>Status</th>
+                <th>Brightness</th>
+                <th>Orbit Data</th>
+            </tr>
+        </thead>
+        <tbody id="progress-body">
+            <tr>
+                <td colspan="6">Loading...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function fetchProgress() {
+            fetch('/progress')
+                .then(response => response.json())
+                .then(data => {
+                    const tbody = document.getElementById('progress-body');
+                    tbody.innerHTML = ''; // Clear existing rows
+                    
+                    if(data.current_file && data.total_files) {
+                        const row = document.createElement('tr');
+                        
+                        const totalCell = document.createElement('td');
+                        totalCell.textContent = data.total_files;
+                        row.appendChild(totalCell);
+                        
+                        const currentCell = document.createElement('td');
+                        currentCell.textContent = data.current_file;
+                        row.appendChild(currentCell);
+                        
+                        const filenameCell = document.createElement('td');
+                        filenameCell.textContent = data.filename;
+                        row.appendChild(filenameCell);
+                        
+                        const statusCell = document.createElement('td');
+                        statusCell.textContent = data.status;
+                        row.appendChild(statusCell);
+                        
+                        const brightnessCell = document.createElement('td');
+                        brightnessCell.textContent = data.brightness != null ? data.brightness : 'N/A';
+                        row.appendChild(brightnessCell);
+                        
+                        const orbitCell = document.createElement('td');
+                        if(data.orbit && data.orbit.x && data.orbit.y) {
+                            orbitCell.textContent = `x: ${data.orbit.x[0].toFixed(2)}, y: ${data.orbit.y[0].toFixed(2)}`;
+                        } else {
+                            orbitCell.textContent = 'N/A';
+                        }
+                        row.appendChild(orbitCell);
+                        
+                        tbody.appendChild(row);
+                    } else {
+                        const row = document.createElement('tr');
+                        const cell = document.createElement('td');
+                        cell.setAttribute('colspan', '6');
+                        cell.textContent = data.message || 'No progress data available.';
+                        row.appendChild(cell);
+                        tbody.appendChild(row);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching progress:', error);
+                    const tbody = document.getElementById('progress-body');
+                    tbody.innerHTML = '<tr><td colspan="6">Error fetching progress data.</td></tr>';
+                });
+        }
+
+        // Fetch progress every 5 seconds
+        setInterval(fetchProgress, 5000);
+        // Initial fetch
+        fetchProgress();
+    </script>
+</body>
+</html>
