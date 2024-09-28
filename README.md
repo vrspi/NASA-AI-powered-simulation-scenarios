@@ -50,9 +50,6 @@ Here's an overview of the project's directory structure:
 - Error Handling: Logs errors and continues processing without interruption when encountering faulty files.
 - Progress Tracking: Updates progress.json to reflect the current processing status.
 
-**Key Code Segments:**
-[Key code segments would go here]
-
 ### 2. progress_app.py
 
 **Purpose:**
@@ -66,9 +63,6 @@ Here's an overview of the project's directory structure:
   - `/list_frames`: Lists all available frames for user selection.
   - `/static/frames/<filename>`: Serves generated frame images.
 - Logging: Captures and logs application events and errors for debugging.
-
-**Key Code Segments:**
-[Key code segments would go here]
 
 ### 3. index.html
 
@@ -84,9 +78,6 @@ Here's an overview of the project's directory structure:
 - User Interactions: Handles frame selection and parameter adjustments through JavaScript event listeners.
 - Real-Time Updates: Sends user inputs to the backend and updates the display based on server responses.
 
-**Key Code Segments:**
-[Key code segments would go here]
-
 ### 4. database_integration.py
 
 **Purpose:**
@@ -96,8 +87,6 @@ Handles interactions with the SQLite database, including creating necessary tabl
 - Database Initialization: Sets up the database and creates tables if they don't exist.
 - Data Insertion: Inserts processed data such as filename, observation date, exposure time, brightness, and orbit information into the database.
 
-**Key Code Segments:**
-[Key code segments would go here]
 
 ### 5. astrometry.py
 
@@ -108,8 +97,6 @@ Performs astrometric calculations to determine the orbits of Near-Earth Objects 
 - Orbit Calculation: Computes the orbit parameters using astrometric data such as Right Ascension (RA) and Declination (Dec).
 - Orbit Data Handling: Structures orbit information for storage and visualization.
 
-**Key Code Segments:**
-[Key code segments would go here]
 
 ### 6. interactive_visualization.py
 
@@ -120,8 +107,6 @@ Generates interactive plots using Plotly or similar libraries to visualize astro
 - Plot Generation: Creates interactive visualizations that allow users to explore data dynamically.
 - Handling Missing Data: Ensures that the visualization remains robust even when certain data points are missing or incomplete.
 
-**Key Code Segments:**
-[Key code segments would go here]
 
 ### 7. Additional Files
 
@@ -410,4 +395,4 @@ This project is licensed under the MIT License. You are free to use, modify, and
 
 ---
 
-For further assistance or inquiries, please contact the project maintainer at email@example.com.
+For further assistance or inquiries, please contact the project maintainer at vrspi33@gmail.com.
