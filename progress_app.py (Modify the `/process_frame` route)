@@ -41,9 +41,13 @@ def process_frame():
     # Get adjustable parameters with defaults
     threshold_percentile = parameters.get('threshold_percentile', 99)
     
+    # Extract additional parameters
+    kernel_size = parameters.get('kernel_size', 5)
+    sigma = parameters.get('sigma', 1)
+    
     # Define the path for the modified frame
     frame_number = filename.split('_')[-1].split('.')[0]  # Extract frame number from filename
-    modified_filename = f'modified_frame_{frame_number}.png'
+    modified_filename = f'modified_frame_{frame_number}_kp{kernel_size}_sigma{sigma}.png'
     fig_path = os.path.join(frames_directory, modified_filename)
     
     try:
@@ -52,7 +56,9 @@ def process_frame():
             fits_file_path, 
             save_fig=True, 
             fig_path=fig_path,
-            threshold_percentile=threshold_percentile
+            threshold_percentile=threshold_percentile,
+            kernel_size=kernel_size,
+            sigma=sigma
         )
         logging.info(f"Processed frame {filename} with parameters {parameters}")
         return jsonify({"modified_frame": f'/static/frames/{modified_filename}'}), 200
@@ -63,15 +69,6 @@ def process_frame():
 @app.route('/static/frames/<path:filename>')
 def serve_frame(filename):
     return send_from_directory(frames_directory, filename)
-
-@app.route('/list_frames')
-def list_frames():
-    try:
-        frames = sorted([f for f in os.listdir(frames_directory) if f.endswith('.png')])
-        return jsonify({"frames": frames}), 200
-    except Exception as e:
-        logging.error(f"Error listing frames: {e}")
-        return jsonify({"error": "Failed to list frames."}), 500
 
 if __name__ == '__main__':
     # Configure logging for Flask app

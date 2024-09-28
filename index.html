@@ -80,21 +80,24 @@
             let selectedFrame = null;
             
             // Fetch list of frames from the server
-            fetch('/list_frames')
-                .then(response => response.json())
+            fetch('/static/frames/')
+                .then(response => response.text())
                 .then(data => {
-                    if(data.frames) {
-                        data.frames.forEach(frame => {
-                            const img = document.createElement('img');
-                            img.src = `/static/frames/${frame}`;
-                            img.alt = frame;
-                            img.classList.add('frame-item');
-                            img.dataset.filename = frame;
-                            framesContainer.appendChild(img);
-                        });
-                    } else {
-                        console.error('Error fetching frames:', data.error);
-                    }
+                    // Since Flask serves static files, we'll list them manually
+                    // Alternatively, create an endpoint to list frame files
+                    // Here, we'll assume frames are named 'frame_XXXX.png'
+                    const frames = [...Array(162).keys()].map(i => {
+                        const index = i + 1;
+                        return `frame_${index.toString().padStart(4, '0')}.png`;
+                    });
+                    frames.forEach(frame => {
+                        const img = document.createElement('img');
+                        img.src = `/static/frames/${frame}`;
+                        img.alt = frame;
+                        img.classList.add('frame-item');
+                        img.dataset.filename = frame;
+                        framesContainer.appendChild(img);
+                    });
                 })
                 .catch(error => {
                     console.error('Error fetching frames:', error);
