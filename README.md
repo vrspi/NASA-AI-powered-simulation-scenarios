@@ -24,7 +24,7 @@ Here are some examples of the visualizations produced by this project:
 ![NEOSSAT Visualization 1](static/frames/frame_0001.png)
 *Figure 1: Example of a processed NEOSSAT image*
 
-![NEOSSAT Visualization 2](static/frames/frame_0050.png)
+![NEOSSAT Visualization 2](static/frames/frame_0048.png)
 *Figure 2: Another processed NEOSSAT image*
 
 These images showcase the ability of the system to process and visualize FITS data, highlighting celestial objects and their characteristics.
